@@ -25,7 +25,6 @@ export const ExchangeForm = () => {
         pattern="^\d+(\.\d{1,2})?\s[a-zA-Z]{3}\sin\s[a-zA-Z]{3}$"
         placeholder="15 USD in UAH"
         name="currency"
-        defaultValue="15 USD in UAH"
       />
     </form>
   );
