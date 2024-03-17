@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchBaseCurrencyThunk } from './thunk';
+import { fetchBaseCurrencyThunk, fetchChangeCurrency } from './thunk';
 
 export const slice = createSlice({
   name: 'currency',
   initialState: {
     baseCurrency: '',
+    exchangeInfo: null,
+    isLoading: false,
+    isError: null,
   },
   reducers: {
     setBaseCurrency: (state, { payload }) => {
@@ -21,6 +24,19 @@ export const slice = createSlice({
           return state;
         }
         state.baseCurrency = 'USD';
+      })
+      .addCase(fetchChangeCurrency.pending, state => {
+        state.isError = null;
+        state.isLoading = true;
+      })
+      .addCase(fetchChangeCurrency.fulfilled, (state, { payload }) => {
+        state.exchangeInfo = payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchChangeCurrency.rejected, (state, { payload }) => {
+        state.exchangeInfo = null;
+        state.isLoading = false;
+        state.isError = payload;
       });
   },
 });
