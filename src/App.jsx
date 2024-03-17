@@ -4,11 +4,11 @@ import Rates from 'pages/Rates';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { setBaseCurrency } from 'reduxState/slice';
 import { fetchBaseCurrencyThunk } from 'reduxState/thunk';
 
-
 export const App = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const options = {
@@ -17,15 +17,15 @@ export const App = () => {
       maximumAge: 0,
     };
 
-    const success = (pos) => {
-      dispatch(fetchBaseCurrencyThunk(pos.coords))
-    }
-    const error = (err) => {
-      // console.warn(`ERROR(${err.code}): ${err.message}`);
-    }
+    const success = pos => {
+      dispatch(fetchBaseCurrencyThunk(pos.coords));
+    };
+    const error = () => {
+      dispatch(setBaseCurrency('USD'));
+    };
 
     navigator.geolocation.getCurrentPosition(success, error, options);
-  }, [])
+  }, []);
 
   return (
     <Routes>
