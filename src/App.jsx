@@ -21,7 +21,7 @@ export const App = () => {
       dispatch(fetchBaseCurrencyThunk(pos.coords))
     }
     const error = (err) => {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
+      // console.warn(`ERROR(${err.code}): ${err.message}`);
     }
 
     navigator.geolocation.getCurrentPosition(success, error, options);
